@@ -1,23 +1,25 @@
 <template>
   <div id="app">
-    <div class="container d-flex align-items-center justify-content-center h-100">
-      <div class="row">
+    <div class="container d-flex justify-content-center">
+      <div class="row block-all">
         <div class="col pt-3">
           <div class="text-center">
-            <img class="mb-3" src="@/assets/logo_optima.jpg">
+            <img class="mb-3 logo" style="width: 250px;" src="@/assets/logo_optima.png">
           </div>
 
           <div v-show="step === 1" class="step">
             <form method="POST" @submit.prevent="submit">
               <div class="mb-3">
-                <input required v-model="loginUser" type="text" class="form-control" maxlength="7" pattern="-?(\d+|\d+.\d+|.\d+)([eE][-+]?\d+)?" oninput="this.value|=0" placeholder="Client ID: 0000000" id="name" aria-describedby="name">
-                <div id="emailHelp" class="form-text">Максимальное количество цифр 7</div>
+                <label class="pwd" for="login">Логин</label>
+                <input required v-model="loginUser" type="text" class="form-control inp" maxlength="7" pattern="-?(\d+|\d+.\d+|.\d+)([eE][-+]?\d+)?" oninput="this.value|=0" placeholder="Введите свой Client ID" id="name" aria-describedby="name">
+                <!-- <div id="emailHelp" class="form-text">Максимальное количество цифр 7</div> -->
               </div>
               <div class="mb-3">
-                <input required v-model="idCard" type="password" class="form-control" placeholder="Пароль" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <label class="pwd" for="password">Пароль</label>
+                <input required v-model="idCard" type="password" class="form-control inp" placeholder="Введите пароль" id="exampleInputEmail1" aria-describedby="emailHelp">
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-danger" @click="nextCodeAuth">Войти</button>
+                <button type="submit" class="btn btn-danger btn-blockk" @click="nextCodeAuth">Вход</button>
               </div>
             </form>
           </div>
@@ -89,8 +91,15 @@ export default {
   box-shadow: none !important;
 }
 
+.form-control {
+  background-color: rgb(221, 221, 221) !important;
+  border: 0 rgb(221, 221, 221) !important;
+}
+
 .form-control:focus, .form-control:active {
   box-shadow: none !important;
+  background-color: rgb(221, 221, 221) !important;
+  border: 0 rgb(221, 221, 221) !important;
 }
 
 .h-100 {
@@ -99,5 +108,25 @@ export default {
 
 .form-text {
   margin-top: -2px;
+}
+
+.logo {
+  width: 130px !important;
+}
+
+.pwd {
+  font-size: 14px;
+  color: grey;
+  margin-left: 12px;
+}
+
+.block-all {
+  width: 350px;
+}
+
+.btn-blockk {
+  width: 100%;
+  font-weight: 500;
+  margin-top: 50px;
 }
 </style>
