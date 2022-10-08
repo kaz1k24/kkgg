@@ -112,15 +112,15 @@ export default {
 }
 
 .form-control {
-  background-color: rgb(221, 221, 221) !important;
-  border: 0 rgb(221, 221, 221) !important;
+  background-color: rgb(233, 233, 233) !important;
+  border: 0 rgb(233, 233, 233) !important;
   height: 40px !important;
 }
 
 .form-control:focus, .form-control:active {
   box-shadow: none !important;
-  background-color: rgb(221, 221, 221) !important;
-  border: 0 rgb(221, 221, 221) !important;
+  background-color: rgb(233, 233, 233) !important;
+  border: 0 rgb(233, 233, 233) !important;
 }
 
 .h-100 {
